@@ -1,0 +1,31 @@
+@font-face{
+    font-family: "MyriadPro-Regular";
+    src: url(font/MyriadPro-Regular.otf);
+}
+.login_form{
+  padding-top:100px;
+  padding-left: 100px;
+  
+ 
+}
+.signup{
+  font-size: 16px;
+  font-color:white;
+}
+.navbar-header{
+  	color:white;
+  	font-family: "MyriadPro-Regular";
+  	font-weight: bold;
+}
+
+.footer{
+  
+  background-color: black;
+}
+.list-inline{
+  padding-top: 40px;
+}
+.footer>.row>.container>.col-lg-8{
+  padding-top: 40px;
+
+}

@@ -1,0 +1,28 @@
+@font-face{
+    font-family: "MyriadPro-Regular";
+    src: url(font/MyriadPro-Regular.otf);
+}
+ 
+    
+}
+.navbar-header{
+  	color:white;
+  	font-family: "MyriadPro-Regular";
+  	font-weight: bold;
+}
+blockquote {
+  
+  font-size: 15pt;
+  font-family:serif;
+}
+.footer{
+  
+  background-color: black;
+}
+.list-inline{
+  padding-top: 40px;
+}
+.footer>.row>.container>.col-lg-8{
+  padding-top: 40px;
+
+}

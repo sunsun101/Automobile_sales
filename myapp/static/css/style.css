@@ -1,0 +1,372 @@
+@font-face{
+    font-family: "MyriadPro-Regular";
+    src: url(../font/MyriadPro-Regular.otf);
+}
+body{
+    background-color: white;
+    margin: 0;
+}
+#header{
+    width:100%;
+    height:62px;
+    background: #333 url(../images/banner.png) repeat-x ;
+
+}
+#picture{
+    height: 468px;
+    background: url(../images/new.jpg) no-repeat;
+}
+#main_content{
+    height: 740px;
+    background-color: #ffffff;
+   
+}
+.footer{
+   
+    background: #333 url(../images/banner.png) repeat;
+    height: 350px;
+    width: 100%
+    
+
+}
+#nav_bar{
+    float: right;
+    width:600px;
+    height: inherit;
+}
+#text{
+    float: left;
+    width:500px;
+    height: inherit;
+}
+#nav_bar ul{
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: inherit;
+    padding-left: 150px;
+}
+
+li{
+    float: left;
+ 
+    
+}
+
+li a{
+
+    display:block;
+    text-decoration: none;
+    font-family: "MyriadPro-Regular";
+    font-size: 16pt;
+    color:white;
+    padding:20px;
+    padding-left: 30px;
+   
+
+}
+li a:hover{
+  
+    height:inherit;
+}
+#text p{
+    height: inherit;
+    display: inline-block;    
+    margin: 0;
+     padding:10px 25px;
+}
+p.first{
+     
+    font-family: "MyriadPro-Regular";
+    font-size: 24pt;
+    color:white;
+    text-align: center;
+   
+}
+p.second{
+     
+
+    font-size: 16pt;
+    font-family: "Times New Roman";
+    text-align: center;
+    color: white;
+    font-style: italic;
+}
+#content{
+    height:inherit;
+    width: inherit;
+  
+}
+#content p{
+    color:#ffffff;
+    font-family:"MyriadPro-Regular";
+}
+
+.button1{
+    display: inline-block;
+    width:234px;
+    height: 50px;
+    background-color: #83c129;
+    font-size: 16pt;
+    cursor: pointer;
+    text-align: center;
+    color:white;
+    font-family: "MyriadPro-Regular";
+    padding-right: 10px;
+    border:none;
+    border-radius: 5px;
+    box-shadow:  0 5px #518719;
+    margin-right: 20px;
+
+}
+.button2{
+    display: inline-block;
+    width:175px;
+    height: 50px;
+    background-color: #068fd5;
+    font-size: 16pt;
+    cursor: pointer;
+    text-align: center;
+    color:white;
+    font-family: "MyriadPro-Regular";
+    top:40px;
+    right:;
+    padding-right: 10px;
+    border:none;
+    border-radius: 5px;
+    box-shadow:  0 5px #046b9f;
+
+
+}
+#text1{
+    font-size: 52pt;
+    text-align: center;
+    padding-top: 30px;
+    margin: 0;
+    
+}
+#text2{
+    font-size: 22pt;
+    text-align: center;
+    padding-top: 20px;
+    margin: 0;
+}
+.buttons{
+    text-align: center;
+    padding-top: 30px;
+    padding-right: 30px;
+
+}
+
+li.help a{
+    background: url(../images/help.png) no-repeat left center;
+   
+
+}
+li.signup a{
+    background: url(../images/user.png) no-repeat left center;
+}
+li.login a{
+    background:url(../images/lock.png) no-repeat left center;
+}
+li.help a:hover{
+    background: #111 url(../images/help.png) no-repeat left center;
+   
+}
+li.signup a:hover{
+    background: #111 url(../images/user.png) no-repeat left center;
+    
+}
+li.login a:hover{
+     background:#111 url(../images/lock.png) no-repeat left center;
+    
+}
+div.images{
+    height: 272px;
+    padding-top: 82px;
+    padding-bottom: 77px;
+    padding-left: 98px;
+    padding-right: 98px;
+
+
+    
+}
+.info{
+    height: 153px;
+    border-top: 3px solid #e7e7e7;
+    width:1140px;
+    margin: auto;
+
+
+}
+.features{
+    height: 33px;
+    border-top: 3px solid #e7e7e7;
+    width:1140px;
+    margin:auto;
+    padding-bottom: 65px;
+    padding-top: 56px;
+    
+}
+.neglect{
+    width: 350px;
+    height: 279px;
+    float: left;
+    text-align: center;
+    border:1px solid #d9dbdf;
+    margin-right: 48px;
+    padding-top: 15px;
+    border-radius: 5px;
+
+
+
+    
+}
+.forget{
+    width: 350px;
+    height: 279px;
+    float: left;
+    text-align: center;
+    padding-top: 15px;
+    border:1px solid #d9dbdf;
+    margin-right: 48px;
+    border-radius: 5px;
+
+
+    
+
+}
+.supress{
+    width: 350px;
+    height: 279px;
+    float: left;
+    text-align: center;
+    border:1px solid #d9dbdf;
+    padding-top: 15px;
+    border-radius: 5px;
+
+
+
+
+    
+
+}
+.images p{
+    font-size: 16pt;
+    font-family: "MyriadPro-Regular";
+    text-align: left;
+    padding-left: 80px;
+    color: #454e5c;
+}
+img.person{
+    width: inherit;
+    height: inherit;
+    
+    
+}
+.photo{
+    width:50px;
+    height: 50px;
+    position: relative;
+    left: 20px;
+    bottom:70px;
+}
+span{
+    font-size: 12pt;
+    color: grey;
+    font-family: "verdana";
+}
+.info ul{
+    list-style-type: none;
+
+}
+.info li{
+        margin:10px 40px;
+        display: inline;
+}
+.info li p{
+    font-size: 10pt;
+    font-family: "MyriadPro-Regular";
+    float: left;
+    color: #828a94;
+}
+.info li img {
+    border-radius: 55px;
+    position:relative;
+    right:30px;
+    float: left;
+
+}
+.features ul{
+    margin:0;
+}
+.features ul li{
+    display: inline;
+    padding-left:40px;
+
+}
+#featureon{
+    padding:0;
+}
+#featureon p{
+    font-family: "MyriadPro-Regular";
+    font-size: 16pt;
+    padding:0;
+    margin: 0;
+}
+td a{
+    text-decoration: none;
+    color: #70767c;
+
+}
+td{
+   
+    font-family: "MyriadPro-Regular";
+    padding-top: 15px;
+    padding-right: 80px;
+    font-size: 12pt;
+
+}
+th{
+    
+    padding-top: 24px;
+    text-align: left;;
+    color: white;
+    font-family: "MyriadPro-Regular";
+    font-size: 12pt;
+    text-transform:uppercase;
+
+}
+
+.bottomleft{
+
+    float: left;
+    width:640px;
+    padding:40px 46px 70px 100px;
+
+}
+.bottomright{
+    float: right;
+    width:350px;
+    height: inherit;
+    
+}
+
+.bottomright ul{
+    list-style-type: none;
+}
+.bottomright ul li{
+    display: inline;
+    padding-top:40px;
+    padding-right: 20px;
+}
+.bottomright p{
+    color:#6b7077;
+    font-family: "MyriadPro-Regular";
+    float: right;
+    position: relative;
+    right: 100px;
+    text-align: right;
+    top: 100px;
+}
