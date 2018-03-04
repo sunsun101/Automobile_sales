@@ -50,11 +50,31 @@ body, html {
   <div class="login_form">
 
     <h2>Login</h2>
-      <form method="post">
+      <form method="post" action="/login/">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Login</button>
-     
+       <fieldset id="body">
+            <fieldset>
+                <label for="User">Username</label>
+                <input type="text" name="name" id="User" />
+            </fieldset>
+            <fieldset>
+                <label for="password">Password</label>
+                <input type="password" name="psw" id="password" />
+            </fieldset>
+            <input type="submit" id="login" value="Login" />
+            <label for="checkbox"><input type="checkbox" id="checkbox" />Remember me</label>
+        </fieldset>
+        <span><a href="#">Forgot Password?</a></span>
+        <span>
+          {% if error %}
+          <p>Invalid password or username<p>
+          {% endif %}
+        </span>
+
+       <!-- {{ form.as_p }}
+       <button type="submit">Login</button>
+       <a href="#">Forgot Password?</a> -->
+  
       </form>
   </div>
 </div>
