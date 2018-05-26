@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+  <title>Automobile Sales System</title>
+  <meta charset="utf-8">
+  <meta name="viewport"content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'css/automobile.css' %}">
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle"data-toggle="collapse" data-target="#mynavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+        <!-- <img src="images/logo.png"> -->
+        <a href="#" class="navbar-brand">AUTOMOBILE SALES SYSTEM</a>
+      </div>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="nav navbar-nav " >
+          <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          <li><a href="#">About us</a></li>
+        
+        </ul>
+        </ul>
+        <div class="navbar-right navbar-btn">
+        
+          <span><p style="color: white">Welcome {{user}}!!</p><span>
+          <a href="{% url 'index' %}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="upload_form">
+  <form method="post" enctype="multipart/form-data" action="/vehicle_store/">
+      {% csrf_token %}
+       <fieldset>
+            <fieldset>
+                <label for="Vehicle_type">* Vehicle Type</label>
+                <input type="text" name="Vehicle_type" required />
+            </fieldset>
+            <fieldset>
+                <label for="Brand">* Brand</label>
+                <input type="text" name="brand" required />
+            </fieldset>
+            <fieldset>
+                <label for="Model_no">Model No</label>
+                <input type="text" name="model" />
+            </fieldset>
+            <fieldset>
+                <label for="Engine_power">Engine power</label>
+                <input type="text" name="engine_power" />
+            </fieldset>
+            <fieldset>
+                <label for="Price">* Price</label>
+                <input type="text" name="price" required />
+            </fieldset>
+            <fieldset>
+                <label for="Description">Description</label>
+                <input type="text" name="description"/>
+            </fieldset>
+            <fieldset>
+                <label for="Upload_Picture">* Upload Picture</label>
+                <img src=""  id ="image" name = "picture">
+               <input type="file" name="imagefile" onchange="showImage.call(this)" accept="image/gif, image/jpeg, image/png" required >
+            </fieldset>
+            <input type="submit"  value="Upload Details" />
+        </fieldset>
+       
+   </form>
+   </div>
+
+<script>
+  function showImage()
+  {
+    if(this.files && this.files[0])
+    {
+      var obj = new FileReader();
+      obj.onload = function(data){
+        var image = document.getElementById("image");
+        image.src = data.target.result;
+        image.style.display = "block";
+      }
+      obj.readAsDataURL(this.files[0]);
+    }
+  }
+</script>    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
+<script src="{%static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
