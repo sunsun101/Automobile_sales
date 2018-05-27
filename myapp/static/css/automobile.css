@@ -52,3 +52,9 @@ input[type=text]{
   width: auto;
   max-width: 460px;
 }
+#display_image{
+  
+  height: 100%;
+  width: 100%;
+  
+}
