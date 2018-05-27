@@ -12,7 +12,10 @@ def index(request):
 def home(request):
 	#text = """<h1>welcome to my app </h1>"""
 	#return HttpResponse(text)
-	return render(request,"Automobile_sales/home.html",{})
+    instance = request.user
+    userid   = instance.id
+    queryset = Vehicles.objects.filter(user_id = userid)
+    return render(request,"Automobile_sales/home.html",{'queryset': queryset})
 
 def user_logout(request):
     logout(request)
@@ -28,7 +31,10 @@ def user_login(request):
     if user is not None:
         if user.is_active:
             login(request,user)
-            return render(request, 'Automobile_sales/home.html', {'user': user})
+            instance = request.user
+            userid   = instance.id
+            queryset = Vehicles.objects.filter(user_id = userid)
+            return render(request, 'Automobile_sales/home.html', {'queryset': queryset})
         else:
             return render(request, 'registration/index.html', {'error': True })
     else:
@@ -68,24 +74,24 @@ def vehicle_upload(request):
 
 # @login_required
 # @transaction.atomic
-def update_profile(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('settings:profile')
-        else:
-            messages.error(request, _('Please correct the error below.'))
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profiles/profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
+# def update_profile(request):
+#     if request.method == 'POST':
+#         user_form = UserForm(request.POST, instance=request.user)
+#         profile_form = ProfileForm(request.POST, instance=request.user.profile)
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#             messages.success(request, _('Your profile was successfully updated!'))
+#             return redirect('settings:profile')
+#         else:
+#             messages.error(request, _('Please correct the error below.'))
+#     else:
+#         user_form = UserForm(instance=request.user)
+#         profile_form = ProfileForm(instance=request.user.profile)
+#     return render(request, 'profiles/profile.html', {
+#         'user_form': user_form,
+#         'profile_form': profile_form
+#     })
 
 def vehicle_store(request):
     if request.POST:
@@ -96,7 +102,12 @@ def vehicle_store(request):
         Description   = request.POST.get('description')
         Image         = request.FILES.get('imagefile')
 
-    vehicle = Vehicles(vehicle_type = Vehicle_type, brand = Brand, model_no = Model_no, price = Price, description = Description, image = Image, user_id = {Userprofile.id} )
-    vehicle.save()
+    instance = request.user
+    userid   = instance.id
 
-    return render(request, 'Automobile_sales/home.html', {})
+   
+    vehicle = Vehicles(vehicle_type = Vehicle_type, brand = Brand, model_no = Model_no, price = Price, description = Description, image = Image, user_id = userid )
+    vehicle.save()
+    
+    queryset = Vehicles.objects.filter(user_id = userid)
+    return render(request, 'Automobile_sales/home.html', {'queryset': queryset})

@@ -38,7 +38,8 @@ class Vehicles(models.Model):
 	price			= models.IntegerField(blank = True, null = True)
 	description		= models.TextField(blank = True)
 	image 			= models.ImageField(upload_to="vehicle_image")
-	user_id			= models.ForeignKey('Userprofile',on_delete=models.CASCADE, blank = True, null = True)
+	# user_id			= models.ForeignKey('Userprofile',on_delete=models.CASCADE, blank = True, null = True)
+	user_id			= models.IntegerField(blank = True, null = True)
 
 	def __str__(self):
     		return self.vehicle_type
