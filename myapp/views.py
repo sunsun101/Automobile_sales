@@ -15,7 +15,7 @@ def home(request):
     instance = request.user
     userid   = instance.id
     queryset = Vehicles.objects.filter(user_id = userid)
-    return render(request,"Automobile_sales/home.html",{'queryset': queryset})
+    return render(request,"Automobile_sales/home.html",{'queryset': queryset })
 
 def user_logout(request):
     logout(request)
@@ -34,7 +34,7 @@ def user_login(request):
             instance = request.user
             userid   = instance.id
             queryset = Vehicles.objects.filter(user_id = userid)
-            return render(request, 'Automobile_sales/home.html', {'queryset': queryset})
+            return render(request, 'Automobile_sales/home.html', {'queryset': queryset })
         else:
             return render(request, 'registration/index.html', {'error': True })
     else:

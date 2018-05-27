@@ -1,46 +1,14 @@
-<!DOCTYPE html>
+{% extends 'Automobile_sales/base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-  <title>Automobile Sales System</title>
-  <meta charset="utf-8">
-  <meta name="viewport"content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/automobile.css' %}">
 
-</head>
-<body onload="document.signup.reset();">
-  
-  <!-- navbar-start   -->
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-          <a href="#" class="navbar-brand">AUTOMOBILE SALES SYSTEM</a>
 
-      </div>
-      
-      <div class="collapse navbar-collapse" id="mynavbar">
-          
-          <ul class="nav navbar-nav " >
-            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-            <li><a href="#">About us</a></li>
-          </ul>
-
-      </div>
-    </div>
-  </nav>
-  <!-- navbar-end -->
-
- 
+{% block body%}
   <!-- form-start -->
   <div class = "register">
-    
+  <div class = "col-2">
+  </div>
+
+  <div class= "col-6" >  
     <form name = "signup" method="post" action="/signup/" id ="signup_form" class="form-horizontal" >
           {% csrf_token %}
           <fieldset><legend class="text-center"><h1>Register</h1> <small> required *</small></span></legend>
@@ -102,10 +70,16 @@
               <input class="btn btn-success" type="submit" name="submit_reg" value="Register">
           </div>
             
-      </form>  
+      </form> 
+      </div> 
+      <div class = "col-2">
+      </div>
   
   </div>
+
+  {% endblock %}
   <!-- form-end -->
+ {% block script %}
 
 <script type="text/javascript">
                           
@@ -158,8 +132,5 @@ var regMail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{
 }
 
 </script>
+{% endblock %}
     
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
-<script src="{%static 'bootstrap/js/bootstrap.min.js' %}"></script>
-</body>
-</html>
