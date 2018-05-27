@@ -1,54 +1,12 @@
-<!DOCTYPE html>
+{% extends 'Automobile_sales/base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-  <title>Automobile Sales System</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/automobile.css' %}">
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-
-</head>
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-        <!-- <img src="images/logo.png"> -->
-        <a href="#" class="navbar-brand">AUTOMOBILE SALES SYSTEM</a>
-      </div>
-      <div class="collapse navbar-collapse" id="mynavbar">
-        <ul class="nav navbar-nav " >
-          <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="{% url 'Vehicle_upload' %}"><span class="glyphicon glyphicon-plus"></span>Upload Vehicle Details</a></li>
-        </ul>
-        </ul>
-        <div class="navbar-right navbar-btn">
-        <!-- <form action="/logout/" method="POST">
-                            {% csrf_token %}
-                            <input style="padding-top: 15px; color: white" class="btn btn-link" type = "submit" value="LOGOUT"/><br/>
-                        </form> -->
-          <span><p style="color: white">Welcome {{user}}!!</p><span>
-          <a href="{% url 'index' %}">Logout</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-  
-    
-    <div class="image_vehicles" style="margin-top: 50px"> 
-    
-    <img src="{{vehicles.image.url}}" width="500px"> 
-    </div>
-   
-    <table id="myTable" class="display">
-        <thead>
+{% block head %}
+  <link rel="stylesheet"  href="{% static 'css/automobile.css' %}">
+{% endblock %}
+{% block body %}
+<div class="card-header"><strong>Posts</strong><small> List of posts</small></div>
+        <table id = "myTable" class ="display">
+          <thead>
             <tr>
                 <th>Vehicle Type</th>
                 <th>Brand</th>
@@ -59,12 +17,12 @@
                 <th>Image</th>
                 
             </tr>
-        </thead>
+          </thead>
         
-        <tbody>
-        {% if queryset %}
-          There are {{queryset| length}} records:
-          {% for obj in queryset %}
+         <tbody>
+          {% if queryset %}
+            There are {{queryset| length}} records:
+            {% for obj in queryset %}
             <tr>
                 <td>{{obj.vehicle_type}}</td>
                 <td>{{obj.brand}}</td>
@@ -73,29 +31,9 @@
                 <td>{{obj.price}}</td>
                 <td>{{obj.description}}</td>
                 <td>
-                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Show Image</button>
+                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target=".bd-example-modal-lg" data-url="{{obj.image.url}}">Show Image</button>
 
-                  <!-- Modal -->
-                  <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <img src ="{{obj.image.url}}" id = "display_image">
-                        <!-- <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Some text in the modal.</p>
-                        </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div> -->
-                    </div>
-
-                   </div>
-                  </div>
+                  
                 </td>
             </tr>
           {% endfor %} 
@@ -104,13 +42,9 @@
         {% endif %}
         </tbody>
     </table>
+     </div>
+  {% endblock %}
   
-  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
-<script src="{%static 'bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script >$(document).ready( function () {
-    $('#myTable').DataTable();
-} );</script>
-</body>
-</html>
+  {% block script %}
+    
+  {% endblock %}

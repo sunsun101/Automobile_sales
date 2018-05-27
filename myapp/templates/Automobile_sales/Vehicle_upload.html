@@ -1,46 +1,74 @@
-<!DOCTYPE html>
+{% extends 'Automobile_sales/base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-  <title>Automobile Sales System</title>
-  <meta charset="utf-8">
-  <meta name="viewport"content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/automobile.css' %}">
 
-</head>
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle"data-toggle="collapse" data-target="#mynavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-        <!-- <img src="images/logo.png"> -->
-        <a href="#" class="navbar-brand">AUTOMOBILE SALES SYSTEM</a>
-      </div>
-      <div class="collapse navbar-collapse" id="mynavbar">
-        <ul class="nav navbar-nav " >
-          <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="#">About us</a></li>
-        
-        </ul>
-        </ul>
-        <div class="navbar-right navbar-btn">
-        
-          <span><p style="color: white">Welcome {{user}}!!</p><span>
-          <a href="{% url 'index' %}">Logout</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-  
-  <div class="upload_form">
+
+{% block body%}
+<div class="upload_form">
   <form method="post" enctype="multipart/form-data" action="/vehicle_store/">
       {% csrf_token %}
-       <fieldset>
+      <div class = "card">
+      <div class="card-header">
+            <strong>Vehicle Details</strong> 
+      </div>
+       <div class="card-body card-block">
+      <div class="row form-group">
+           <div class="col-6">
+              <div class="form-group"><label for="Vehicle_type" class=" form-control-label">* Vehicle Type</label>
+                  <input type="text" name = "Vehicle_type" placeholder="Enter vehicle type" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group"><label for="Brand" class=" form-control-label">* Brand</label>
+                  <input type="text" name = "brand" placeholder="Enter vehicle brand" class="form-control" required>
+              </div>
+            </div>
+      </div>
+       <div class="row form-group">
+           <div class="col-6">
+                        
+              <div class="form-group"><label for="Model_no" class=" form-control-label">Model No</label>
+                <input type="text" name = "model" placeholder="Enter model number" class="form-control">
+              </div>
+            </div>
+            <div class="col-6">
+               <div class="form-group"><label for="Engine_power" class=" form-control-label">Engine Power</label>
+                <input type="text" name = "engine_power"  class="form-control">
+               </div>
+            </div>
+        </div>
+        <div class="row form-group">
+           <div class="col-6">
+                        
+              <div class="form-group"><label for="Price" class=" form-control-label">* Price</label>
+                <input type="text" name = "price"  class="form-control" required>
+              </div>
+            </div>
+            <div class="col-6">
+               <div class="form-group"><label for="Description" class=" form-control-label">Description</label>
+                 <input type="text" name = "description"  class="form-control">
+               </div>
+            </div>
+        </div>
+        <div class="form-group"><label for="Upload_Picture" class=" form-control-label">* Upload Picture</label>
+                <img src=""  id ="image" name = "picture">
+                <input type="file" name="imagefile" onchange="showImage.call(this)" accept="image/gif, image/jpeg, image/png" class="form-control" required >
+                
+        </div>
+         </div >
+
+        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                          <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                          <i class="fa fa-ban"></i> Reset
+                        </button>
+       </div>
+      </div>
+     
+
+                         
+      <!--  <fieldset>
             <fieldset>
                 <label for="Vehicle_type">* Vehicle Type</label>
                 <input type="text" name="Vehicle_type" required />
@@ -71,10 +99,13 @@
                <input type="file" name="imagefile" onchange="showImage.call(this)" accept="image/gif, image/jpeg, image/png" required >
             </fieldset>
             <input type="submit"  value="Upload Details" />
-        </fieldset>
+        </fieldset> -->
        
    </form>
    </div>
+{% endblock %}
+
+{% block script %}
 
 <script>
   function showImage()
@@ -91,7 +122,5 @@
     }
   }
 </script>    
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
-<script src="{%static 'bootstrap/js/bootstrap.min.js' %}"></script>
-</body>
-</html>
+
+{% endblock %}
