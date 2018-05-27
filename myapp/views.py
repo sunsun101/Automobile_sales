@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from .models import Userprofile
 from .models import Vehicles
+
 
 
 def index(request):
@@ -27,6 +29,7 @@ def Register(request):
 def user_login(request):
     username = request.POST['name']
     password = request.POST['psw']
+    
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
@@ -34,7 +37,8 @@ def user_login(request):
             instance = request.user
             userid   = instance.id
             queryset = Vehicles.objects.filter(user_id = userid)
-            return render(request, 'Automobile_sales/home.html', {'queryset': queryset})
+            return HttpResponseRedirect('/home/')
+            # return render(request, 'Automobile_sales/home.html', {'queryset': queryset})
         else:
             return render(request, 'registration/index.html', {'error': True })
     else:
