@@ -114,4 +114,4 @@ def vehicle_store(request):
     vehicle.save()
     
     queryset = Vehicles.objects.filter(user_id = userid)
-    return render(request, 'Automobile_sales/home.html', {'queryset': queryset})
+    return HttpResponseRedirect('/home/')
