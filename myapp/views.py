@@ -8,12 +8,12 @@ from .models import Vehicles
 
 
 
+
 def index(request):
 	return render(request, 'registration/index.html', { })
 
 def home(request):
-	#text = """<h1>welcome to my app </h1>"""
-	#return HttpResponse(text)
+	
     instance = request.user
     userid   = instance.id
     queryset = Vehicles.objects.filter(user_id = userid)
@@ -38,7 +38,7 @@ def user_login(request):
             userid   = instance.id
             queryset = Vehicles.objects.filter(user_id = userid)
             return HttpResponseRedirect('/home/')
-            # return render(request, 'Automobile_sales/home.html', {'queryset': queryset})
+            
         else:
             return render(request, 'registration/index.html', {'error': True })
     else:
@@ -115,3 +115,6 @@ def vehicle_store(request):
     
     queryset = Vehicles.objects.filter(user_id = userid)
     return HttpResponseRedirect('/home/')
+
+
+

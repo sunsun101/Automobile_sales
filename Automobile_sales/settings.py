@@ -25,7 +25,7 @@ SECRET_KEY = '@f)w!6-pnmh5=mmx)=t159+o9)cwrfw57-el17()%vgk0dj9+k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.108']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'rest_framework',
    
 )
 
@@ -81,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Automobile',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'Sherlocked07&08',
     }
 }
 
