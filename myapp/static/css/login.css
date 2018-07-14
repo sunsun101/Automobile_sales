@@ -13,12 +13,12 @@
  
 }
 .container{
-  margin-left: 0px;
+  /*margin-left: 0px;*/
 
 }
 .login-content{
 
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+ /* box-shadow: 0 5px 10px rgba(0,0,0,.2);*/
 }
 
 .navbar-header{
