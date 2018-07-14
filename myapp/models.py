@@ -12,20 +12,12 @@ class Userprofile(models.Model):
 	middle_name	= models.CharField(max_length=50,blank=True)
 	last_name	= models.CharField(max_length=50,blank=True)
 	gender 		= models.CharField(max_length=10,blank=True)
-	email		= models.CharField(max_length=100,null=True)
+	email		= models.CharField(max_length=100,null=True,unique=True)
 	birth_date	= models.DateField(null=True,blank=True)
-	user_name   = models.CharField(max_length=30,blank=True)
+	user_name   = models.CharField(max_length=30,blank=True,unique=True)
 	password 	= models.CharField(max_length=16,blank=True)
 	Acc_type	= models.CharField(max_length= 10,default = "individual") 
 
-	# @receiver(post_save,sender=User)
-	# def create_user_profile(sender, instance, created, **kwargs):
-	# 	if created:
-	# 		Userprofile.objects.create(user=instance)
-
-	# @receiver(post_save, sender=User)
-	# def save_user_profile(sender, instance, **kwargs):
-	# 	instance.userprofile.save()
 	
 	def __str__(self):
     		return self.first_name

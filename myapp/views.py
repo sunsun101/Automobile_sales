@@ -32,15 +32,15 @@ def user_login(request):
     
     user = authenticate(username=username, password=password)
     if user is not None:
-        if user.is_active:
+        # if user.is_active:
             login(request,user)
             instance = request.user
             userid   = instance.id
             queryset = Vehicles.objects.filter(user_id = userid)
             return HttpResponseRedirect('/home/')
             
-        else:
-            return render(request, 'registration/index.html', {'error': True })
+        # else:
+        #     return render(request, 'registration/index.html', {'error': True })
     else:
         return render(request, 'registration/index.html', {'error': True })
 
