@@ -26,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self,request,*arg,**kwarg):
         data = request.data 
  
-        user = authenticate(username=data['username'], password=data['password'])
+        user = authenticate(username=data['user_name'], password=data['password'])
         if user is not None:
             # A backend authenticated the credentials
             return Response({'userid':user.id},status=status.HTTP_202_ACCEPTED)

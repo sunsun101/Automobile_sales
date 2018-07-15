@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -13,7 +13,8 @@ def index(request):
 	return render(request, 'registration/index.html', { })
 
 def home(request):
-	
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
     instance = request.user
     userid   = instance.id
     queryset = Vehicles.objects.filter(user_id = userid)
@@ -21,28 +22,39 @@ def home(request):
 
 def user_logout(request):
     logout(request)
+    try:
+        del request.session['logged_in']
+    except KeyError:
+       return HttpResponseRedirect('/')
+    
     return render(request, "registration/index.html", { })
 
 def Register(request):
 	return render(request,"registration/register.html", {})
 
 def user_login(request):
+   
     username = request.POST['name']
     password = request.POST['psw']
+
+    queryset_user = Userprofile.objects.filter(user_name = username)
+    if(queryset_user[0].Acc_type == 'company'):
     
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        # if user.is_active:
-            login(request,user)
-            instance = request.user
-            userid   = instance.id
-            queryset = Vehicles.objects.filter(user_id = userid)
-            return HttpResponseRedirect('/home/')
-            
-        # else:
-        #     return render(request, 'registration/index.html', {'error': True })
-    else:
-        return render(request, 'registration/index.html', {'error': True })
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # if user.is_active:
+                login(request,user)
+                request.session['logged_in'] = True
+                instance = request.user
+                userid   = instance.id
+                queryset = Vehicles.objects.filter(user_id = userid)
+                return HttpResponseRedirect('/home/')
+                
+            # else:
+            #     return render(request, 'registration/index.html', {'error': True })
+        else:
+            return render(request, 'registration/index.html', {'error': True })
+    return render(request, 'registration/index.html', {'msg': True })
 
 def signup(request):
     if request.POST:
@@ -74,30 +86,14 @@ def signup(request):
 
 
 def vehicle_upload(request):
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
     return render(request,'Automobile_sales/Vehicle_upload.html', {})
 
-# @login_required
-# @transaction.atomic
-# def update_profile(request):
-#     if request.method == 'POST':
-#         user_form = UserForm(request.POST, instance=request.user)
-#         profile_form = ProfileForm(request.POST, instance=request.user.profile)
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-#             messages.success(request, _('Your profile was successfully updated!'))
-#             return redirect('settings:profile')
-#         else:
-#             messages.error(request, _('Please correct the error below.'))
-#     else:
-#         user_form = UserForm(instance=request.user)
-#         profile_form = ProfileForm(instance=request.user.profile)
-#     return render(request, 'profiles/profile.html', {
-#         'user_form': user_form,
-#         'profile_form': profile_form
-#     })
 
 def vehicle_store(request):
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
     if request.POST:
         Vehicle_type  = request.POST.get('Vehicle_type')
         Brand         = request.POST.get('brand')

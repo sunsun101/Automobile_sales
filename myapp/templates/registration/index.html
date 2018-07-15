@@ -6,8 +6,8 @@
   <meta charset="utf-8">
   <meta name="viewport"content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
-   <link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">
 
 
 
@@ -16,11 +16,12 @@ html,body{
   height: 100%
 }
 .bg {
-   /* background-image: url({%static 'images/background.jpg'%});
-    height: 100%; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;*/
+   /* background-image: url({%static 'images/mybackground.jpg'%});
+  
+    background-position: left;
+    background-repeat: no-repeat;*/
+    background-color: white;
+   /* background-size: cover;*/
    
 
 
@@ -34,54 +35,128 @@ html,body{
 
 <body class ="bg">
 
-  <div class="sufee-login d-flex align-content-center flex-wrap">
-        <div class="container">
-   
-            <div class="login-content">
-                <h2>Login</h2>
-                <div class="login-logo">
+    <div class="row">
 
-                    <a href="index.html">
-                        <img class="align-content" src="" alt="">
-                    </a>
-                </div>
-                <div class="login-form">
-                    <form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" class="form-control" name ="name" id ="User" placeholder="Enter username">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" name ="psw" id = "password" placeholder="Password">
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Remember Me
-                            </label>
-                            <label class="pull-right">
-                                <a href="#" style="color: gray">Forgotten Password?</a>
-                            </label>
+        <div class = "col-lg-7 col-7">
+        <img src = {%static 'images/mybackground.jpg'%}>
 
-                        </div>
-                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
-                        <span>
-                            {% if error %}
-                            <p>Invalid Password or Username</p>
-                            {% endif %}
-                        </span>
-                        
-                        
-                        <div class="register-link m-t-15 text-center">
-                            <p>Don't have account ? <a href="{% url 'Register' %}" style="color: gray"> Sign Up Here</a></p>
-                        </div>
-                    </form>
+        </div>
+
+        <div class = "col-lg-5 col-5">
+
+      
+            <div class="container">
+       
+                <div class="login-content">
+                    <h2>Login</h2>
+                   
+                    <div class="login-form">
+                        <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" name ="name" id ="User" placeholder="Enter username">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name ="psw" id = "password" placeholder="Password">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Remember Me
+                                </label>
+                                <label class="pull-right">
+                                    <a href="#" style="color: red">Forgotten Password?</a>
+                                </label>
+
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                            <br>
+                            <span>
+                                {% if error %}
+                                <p style="color:red">Invalid Password or Username</p>
+                                {% endif %}
+                                {% if msg %}
+                                <p style="color:red">Please login using valid Company ID</p>
+                                {% endif %}
+                            </span>
+                            <br>
+                            
+                            
+                            <div class="register-link m-t-15 text-center">
+                                <p>Don't have account ? <a href="{% url 'Register' %}" style="color: blue"> Sign Up Here</a></p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <section class="aboutus">
+
+    <h3>About Us</h3>
+    <br>
+    <p>Automobile Sales System provides a platform for buying and selling new and old Vehicles.<br> If you own an automobile company and want to user our service please contact us to create an account.<br> For individual user please download our mobile app and sign up to enjoy our free service. </p>
+    
+    </section>
+    <br>
+
+     <footer>
+     <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="small-title">Call us</h3>
+                    <br>
+                    <ul class="list-unstyled">
+                       
+                        <li>4287654, 4287171</li>
+                        <li>9841228386</li>
+                        
+                    </ul>
+                   
+                   
+                </div>
+
+                <div class="col-md-4">
+
+                <h3 class="small-title">Download App</h3>
+                   
+                    <a href="#"><img src={% static "images/google-play-badge.png" %} alt="" class="download-logo"></a>                  
+                   
+                   
+                    
+                </div>
+
+                
+
+                <div class="col-md-4 ">
+                     <div class="mt-2">
+                        <h3 class="small-title">Connect with Us</h3>
+                        <br>
+                        <div class = "social-media">
+                            <a href="#"><img src={% static "images/001-twitter.png" %} alt="" class="social-logo"></a>
+                            <a href="#"><img src={% static "images/002-instagram.png" %} alt="" class="social-logo"></a>                      
+                            <a href="#"><img src={% static "images/003-facebook.png" %} alt="" class="social-logo"></a>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+
+                <div class="col-md-12 footer__tnc">
+                    <hr>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="/Home/TermsandPrivacy">Terms of Usage and Privacy Policy</a></li>                     
+                        <li class="list-inline-item float-md-right"><p>Copyright &copy; Automobile Sales System 2018</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>  
+       
+    </footer>
   
-</div>
+
 
 
 
