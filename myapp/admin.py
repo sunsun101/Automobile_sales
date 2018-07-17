@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Userprofile,Vehicles
+from .models import Userprofile,Vehicles,Userlikes
 
 
 class UserprofileModel(admin.ModelAdmin):
@@ -9,13 +9,21 @@ class UserprofileModel(admin.ModelAdmin):
 		model = Userprofile
 
 class VehiclesModel(admin.ModelAdmin):
-	list_display = ["user_id","vehicle_type", "brand", "model_no" , "engine_power", "price","description","image"]
+	list_display = ["id","user_id","vehicle_type", "brand", "model_no" , "engine_power", "price","description","image","like_count"]
 	search_fields = ["vehicle_type", "brand"]
 	class Meta:
 		model = Vehicles
 
+class UserlikeModel(admin.ModelAdmin):
+	list_display = ["company_id","vehicle_id","user_id"]
+	search_fields = ["company_id", "vehicle_id"]
+	class Meta:
+		model = Userlikes
+
 admin.site.register(Userprofile, UserprofileModel)
 
 admin.site.register(Vehicles, VehiclesModel)
+
+admin.site.register(Userlikes, UserlikeModel)
 
 # Register your models here.

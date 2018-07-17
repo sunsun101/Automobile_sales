@@ -25,6 +25,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'userprofile',views.UserProfileViewSet)
 router.register(r'vehicles', views.VehicleViewSet)
+router.register(r'userlike',views.UserlikeViewSet)
 
 
 urlpatterns = [

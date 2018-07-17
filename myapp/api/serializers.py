@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from myapp.models import Vehicles,Userprofile
+from myapp.models import Vehicles,Userprofile,Userlikes
 from rest_framework import serializers
 
 
@@ -17,8 +17,11 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
 class VehiclesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Vehicles
-        fields = ('vehicle_type', 'brand' , 'model_no', 'engine_power', 'price', 'description', 'image', 'user_id')
+        fields = ('id','vehicle_type', 'brand' , 'model_no', 'engine_power', 'price', 'description', 'image', 'user_id')
 
-
-
-
+class UserlikeSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Userlikes
+		fields = ('company_id','user_id','vehicle_id')
+			
+	

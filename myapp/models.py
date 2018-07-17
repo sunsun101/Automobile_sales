@@ -7,7 +7,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Userprofile(models.Model):
 	# user = models.OneToOneField(User, on_delete=models.CASCADE ,null=True)
-	# password 	= models.CharField(max_length=100,blank=False)
+	# password 	= models.CharField(max_length=100,blank=False)rue
 	first_name	= models.CharField(max_length=50,blank=True)
 	middle_name	= models.CharField(max_length=50,blank=True)
 	last_name	= models.CharField(max_length=50,blank=True)
@@ -32,6 +32,14 @@ class Vehicles(models.Model):
 	image 			= models.ImageField(upload_to="vehicle_image")
 	# user_id			= models.ForeignKey('Userprofile',on_delete=models.CASCADE, blank = True, null = True)
 	user_id			= models.IntegerField(blank = True, null = True)
+	like_count		= models.IntegerField(blank=True,null=True)
 
 	def __str__(self):
     		return self.vehicle_type
+
+
+class Userlikes(models.Model):
+
+	company_id	= models.IntegerField(blank=True,null=True)
+	user_id		= models.IntegerField(blank=True,null=True)
+	vehicle_id	= models.IntegerField(blank=True,null=True)

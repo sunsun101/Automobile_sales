@@ -1,8 +1,8 @@
 # from rest_framework.generics import ListAPIView
-from myapp.models import Userprofile,Vehicles
+from myapp.models import Userprofile,Vehicles,Userlikes
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .serializers import UserSerializer,VehiclesSerializer,UserProfileSerializer
+from .serializers import UserSerializer,VehiclesSerializer,UserProfileSerializer,UserlikeSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
@@ -60,5 +60,13 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 class VehicleViewSet(viewsets.ModelViewSet):
    
-    queryset = Vehicles.objects.all()
-    serializer_class = VehiclesSerializer
+    queryset            = Vehicles.objects.all()
+    serializer_class    = VehiclesSerializer
+
+
+class UserlikeViewSet(viewsets.ModelViewSet):
+
+    queryset            = Userlikes.objects.all()
+    serializer_class    = UserlikeSerializer
+
+    
