@@ -11,12 +11,13 @@ class Userprofile(models.Model):
 	first_name	= models.CharField(max_length=50,blank=True)
 	middle_name	= models.CharField(max_length=50,blank=True)
 	last_name	= models.CharField(max_length=50,blank=True)
+	company_name = models.CharField(max_length=50,blank=True)
 	gender 		= models.CharField(max_length=10,blank=True)
-	email		= models.CharField(max_length=100,null=True,unique=True)
+	email		= models.CharField(max_length=100,null=True,blank=True)
 	birth_date	= models.DateField(null=True,blank=True)
 	user_name   = models.CharField(max_length=30,blank=True,unique=True)
 	password 	= models.CharField(max_length=16,blank=True)
-	Acc_type	= models.CharField(max_length= 10,default = "individual") 
+	Acc_type	= models.CharField(max_length= 10,default = "I") 
 
 	
 	def __str__(self):
@@ -41,5 +42,5 @@ class Vehicles(models.Model):
 class Userlikes(models.Model):
 
 	company_id	= models.IntegerField(blank=True,null=True)
-	user_id		= models.IntegerField(blank=True,null=True)
+	liker_id	= models.IntegerField(blank=True,null=True)
 	vehicle_id	= models.IntegerField(blank=True,null=True)

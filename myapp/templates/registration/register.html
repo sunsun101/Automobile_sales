@@ -47,13 +47,14 @@
      
           <div class="form-group">
               <label for="email" ><span class="req">* </span>Email-id</label>
-              <input type="text" class="form-control" name="email" placeholder="enter your email" onchange="email_validate(this.value);"/>
+              <input type="text" class="form-control" name="email" placeholder="enter your email" onchange="email_validate(this.value);" required>
               <div class="status" id="status"></div>
           </div>
        
           <div class="form-group">
               <label for="user-name" ><span class="req">* </span>Username</label>
-              <input type="text" class="form-control" name="user-name" onkeyup = "Validate(this)" placeholder="minimum 6 letters" required>
+              <input type="text" class="form-control" name="user-name" onchange= "Validate(this)" placeholder="minimum 6 letters" required>
+              <div class="msg" id="msg"></div>
           </div>
       
           <div class="form-group">
@@ -67,7 +68,7 @@
 
                                     
           <div class="form-group">
-              <input class="btn btn-success" type="submit" name="submit_reg" value="Register">
+              <input class="btn btn-success" type="submit" name="submit_reg" value="Register" id = "register">
           </div>
             
       </form> 
@@ -115,20 +116,58 @@ f
 // validates text only
 function Validate(txt) {
     txt.value = txt.value.replace(/[^a-zA-Z-'\n\r.]+/g, '');
+    $.ajax({
+        url: '/validate_username/',
+        data: {
+          'username': txt.value
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+             document.getElementById("msg").innerHTML    = "<span class='warning' style='color:red'>Username already exists!</span>";
+            $('#register').attr('disabled', 'disabled');
+          }
+          else{
+             $('#register').removeAttr('disabled');
+             document.getElementById("msg").innerHTML    = "<span></span>";
+          }
+          
+        }
+      });
 }
 // validate email
 function email_validate(email)
 {
-var regMail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
 
-    if(regMail.test(email) == false)
-    {
-    document.getElementById("status").innerHTML    = "<span class='warning'>Email address is not valid yet.</span>";
-    }
-    else
-    {
-    document.getElementById("status").innerHTML = "<span class='valid'>Thanks, you have entered a valid Email address!</span>"; 
-    }
+    $.ajax({
+        url: '/validate_email/',
+        data: {
+          'email': email
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+             document.getElementById("status").innerHTML    = "<span class='warning' style='color:red'>Email already exists!</span>";
+            $('#register').attr('disabled', 'disabled');
+          }
+          else{
+
+              $('#register').removeAttr('disabled');
+            
+              var regMail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
+
+              if(regMail.test(email) == false)
+               {
+                  document.getElementById("status").innerHTML    = "<span class='warning' style='color:red'>Please enter valid email address.</span>";
+                }
+              else
+              {
+                  document.getElementById("status").innerHTML = "<span class='valid' style='color:green'>Thanks, you have entered a valid Email address!</span>"; 
+               }
+          }
+          
+        }
+      });
 }
 
 </script>

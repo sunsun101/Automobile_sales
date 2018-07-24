@@ -1,0 +1,122 @@
+{% extends 'Automobile_sales/base.html' %}
+{% load staticfiles %}
+{% block head %}
+  <link rel="stylesheet"  href="{% static 'css/automobile.css' %}">
+{% endblock %}
+{% block body %}
+
+<div class = "display">
+
+{% if queryset %}
+            
+        {% for obj in queryset %}
+
+            
+               <div class="loop">
+                    <div class = "pictureContainer">
+                    <p>{{userid}}</p>
+                        <img src="{{obj.image.url}}">
+
+                    </div>
+                    <div class="like">
+                        {% if obj.liker_id != null %}
+                        <img src="{%static 'images/likechange.jpg' %}" id="likeimage{{obj.id}}" onclick="likecounterDecrement({{obj.id}},'{% static 'images/like.png'%}')">
+                        {% else %}
+                        <img src="{%static 'images/like.png' %}" id="likeimage{{obj.id}}" onclick="likecounterIncrement({{obj.id}},'{% static 'images/likechange.jpg'%}')">
+                        {% endif %}
+                    </div>
+                    
+                    <table  class ="description">
+                      
+                        
+                     <tbody>
+                        <tr>
+                            <td style="font-weight: bold;">Description</td>
+                        </tr>
+                      
+                        <tr>
+                            <td>Brand:</td>
+                            <td>{{obj.brand}}</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Model No:</td>
+                            <td>{{obj.model_no}}</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Engine Power:</td>
+                            <td>{{obj.engine_power}}</td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td>{{obj.price}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>{{obj.description}}</td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
+                 <hr>  
+             </div>
+             
+                
+                
+        {% endfor %} 
+{% else %}
+          There are no records in the system
+{% endif %}
+</div>
+
+
+
+{% endblock %}
+  
+{% block script %}
+<script >
+
+    $(function(){
+        console.log("ready");
+    });
+    
+    
+    function likecounterIncrement(i, imagepath){
+
+       $.ajax({
+            url: '/likecounterIncrement/',
+            data: {
+            'id': i
+            },
+            dataType: 'json',
+            success: function(result){
+                $("#likeimage"+i).attr('src',imagepath)
+                $("#likeimage"+i).attr('onclick',"likecounterDecrement("+i+",'/static/images/like.png')")
+                console.log(result.response);
+               
+        }});
+    }
+    function likecounterDecrement(i, imagepath){
+
+        
+
+        $.ajax({
+            url: '/likecounterDecrement/',
+            data: {
+            'id': i
+            },
+            dataType: 'json',
+            success: function(result){
+                $("#likeimage"+i).attr('src',imagepath)
+                $("#likeimage"+i).attr('onclick',"likecounterIncrement("+i+",'/static/images/likechange.jpg')")
+                
+                console.log(result.response);
+               
+        }});
+    }
+
+</script>
+
+    
+{% endblock %}

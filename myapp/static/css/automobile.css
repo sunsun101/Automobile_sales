@@ -51,3 +51,39 @@ input[type=text]{
   width: 100%;
   
 }
+
+.pictureContainer{
+
+  width: 800px;
+  height:500px;
+  overflow: hidden;
+
+}
+.pictureContainer img{
+   width: 100%;
+   height: auto;
+   margin: -100px 0 0 0;
+
+
+}
+
+.description .row{
+
+  margin-left: 20px;
+}
+.description{
+  margin-left: 30px;
+}
+
+.description td{
+  padding-right: 10px;
+
+}
+
+.like img{
+
+  margin-left: 30px;
+  height: 40px;
+  width: 40px;
+
+}

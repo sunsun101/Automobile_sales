@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import Userprofile,Vehicles,Userlikes
-
+from django.contrib.auth.models import User
 
 class UserprofileModel(admin.ModelAdmin):
-	list_display = ["id","first_name", "middle_name", "last_name" , "gender", "email","Acc_type"]
+	list_display = ["id","first_name", "middle_name", "last_name" ,"company_name", "gender", "email","Acc_type"]
 	search_fields = ["first_name", "last_name"]
 	class Meta:
 		model = Userprofile
@@ -15,7 +15,7 @@ class VehiclesModel(admin.ModelAdmin):
 		model = Vehicles
 
 class UserlikeModel(admin.ModelAdmin):
-	list_display = ["company_id","vehicle_id","user_id"]
+	list_display = ["company_id","vehicle_id","liker_id"]
 	search_fields = ["company_id", "vehicle_id"]
 	class Meta:
 		model = Userlikes
@@ -25,5 +25,4 @@ admin.site.register(Userprofile, UserprofileModel)
 admin.site.register(Vehicles, VehiclesModel)
 
 admin.site.register(Userlikes, UserlikeModel)
-
 # Register your models here.
