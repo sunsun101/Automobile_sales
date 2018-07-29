@@ -9,11 +9,13 @@ urlpatterns = [
 
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^home/$', views.home, name='home'),
+	url(r'^adminpage/$', views.adminpage, name='adminpage'),
 	url(r'^$',views.index,name='index'),
 	url(r'^login/$',views.user_login, name='login'),
 	url(r'^Upload/$',views.vehicle_upload, name='Vehicle_upload'),
 	url(r'^Register/$',views.Register, name='Register'),
 	url(r'^signup/$',views.signup, name='Signup'),
+	url(r'^create_account/$',views.create_account, name='create_account'),
 	url(r'^vehicle_store/$',views.vehicle_store, name='vehicle_store'),
 	url(r'^userhome/$',views.userhome, name='userhome'),
 	url(r'^likecounterIncrement/$',views.likecounterIncrement, name='likecounterIncrement'),

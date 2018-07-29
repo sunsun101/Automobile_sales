@@ -65,6 +65,9 @@
                     <li><a href="{% url 'bubble_chart' %}"><i class="fa fa-id-badge"></i>  Data VIsualization</a></li>
                     
                     {% endif %}
+                    {% if admin%}
+                    <li><a href="#"><i class="fa fa-id-badge"></i>Create Company Account</a></li>
+                    {% endif %}
                     
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -84,7 +87,7 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                    {% if home_or_userhomepage %}
+                    {% if home_or_userhomepage or admin %}
                     <div class="header-left">
                        <span><p style="color: black, font : helvetica ">Welcome {{user}} </p><span>
                        
@@ -93,7 +96,7 @@
                 </div>
 
                 <div class="col-sm-5">
-                {% if home_or_userhomepage %}
+                {% if home_or_userhomepage or admin%}
 
                     <div class="user-area dropdown float-right">
 

@@ -32,6 +32,12 @@ def userhome(request):
 
     return render(request,"Automobile_sales/userhome.html",{'queryset': queryset,'home_or_userhomepage': True,'userid':userid})
 
+def adminpage(request):
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
+    return render(request,'Automobile_sales/adminpage.html',{'admin':True})
+
+
 
 
 def user_logout(request):
@@ -89,6 +95,16 @@ def user_login(request):
             else:
                 return render(request, 'registration/index.html', {'error': True })
 
+        elif(queryset_user[0].Acc_type == 'A'):
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_superuser:
+                    login(request,user)
+                    request.session['logged_in'] = True
+                    
+                    return HttpResponseRedirect('/adminpage/')
+
+
         else:
 
             return render(request, 'registration/index.html', {'msg': True })
@@ -127,6 +143,18 @@ def signup(request):
     return render(request, 'registration/index.html', {})
 
           
+def create_account(request):
+    if request.POST:
+        company_name    = request.POST.get('company_name')
+        username        = request.POST.get('username')
+        psw             = request.POST.get('password')
+       
+    p = Userprofile(first_name='',middle_name ='',last_name='',company_name = company_name, user_name=username, email= '', password=psw, gender='',Acc_type='C')
+    p.save()        
+    user = User.objects.create_user(username=username, password=psw)
+    user.save()
+
+    return HttpResponseRedirect('/adminpage/')
 
 
 def vehicle_upload(request):

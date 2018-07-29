@@ -29,11 +29,11 @@ class UserViewSet(viewsets.ModelViewSet):
         user = authenticate(username=data['user_name'], password=data['password'])
         if user is not None:
             # A backend authenticated the credentials
-            return Response({'userid':user.id},status=status.HTTP_202_ACCEPTED)
+            return Response({'userid':user.id,'boolean':True},status=status.HTTP_202_ACCEPTED)
 
         else:
             # No backend authenticated the credentials
-             return Response(status=status.HTTP_401_UNAUTHORIZED)
+             return Response({'boolean':False},status=status.HTTP_401_UNAUTHORIZED)
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """
