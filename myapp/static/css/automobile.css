@@ -59,13 +59,7 @@ input[type=text]{
   overflow: hidden;
 
 }
-.pictureContainer img{
-   width: 100%;
-   height: auto;
-   margin: -100px 0 0 0;
 
-
-}
 
 .description .row{
 
@@ -80,10 +74,31 @@ input[type=text]{
 
 }
 
+
+.barForm{
+  padding-left: 30px;
+}
+.pictureContainer img{
+   width: 100%;
+   height: auto;
+   margin: -100px 0 0 0;
+
+
+}
 .like img{
 
   margin-left: 30px;
   height: 40px;
   width: 40px;
 
+}
+
+.ui-datepicker-calendar {
+   display: none;
+}
+.ui-datepicker-month {
+   display: none;
+}
+.ui-datepicker-next,.ui-datepicker-prev {
+  display:none;
 }

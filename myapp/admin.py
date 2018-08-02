@@ -15,8 +15,8 @@ class VehiclesModel(admin.ModelAdmin):
 		model = Vehicles
 
 class UserlikeModel(admin.ModelAdmin):
-	list_display = ["company_id","vehicle_id","liker_id"]
-	search_fields = ["company_id", "vehicle_id"]
+	list_display = ["company_id","vehicle_id","liker_id","date"]
+	search_fields = ["company_id", "vehicle_id","date"]
 	class Meta:
 		model = Userlikes
 

@@ -24,6 +24,8 @@ urlpatterns = [
 	url(r'^validate_email/$',views.validate_email, name='validate_email'),
 	url(r'^userprofile/$',views.userprofile, name='userprofile'),
 	url(r'^bubble_chart/$',views.bubble_chart, name='bubble_chart'),
+	url(r'^bar_chart/$',views.bar_chart, name='bar_chart'),
+	url(r'^line_chart/$',views.line_chart, name='line_chart'),
 
 	
 

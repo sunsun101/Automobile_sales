@@ -27,10 +27,26 @@
     <link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">
     <link href="{% static 'assets/css/lib/vector-map/jqvmap.min.css' %}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet"  href="{% static 'css/automobile.css' %}">
+    <script src="{% static 'assets/js/vendor/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+    <script>
+    $(function() {
+        $('#datepicker').datepicker({
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy',
+        onClose: function(dateText, inst) { 
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, 1));
+        }
+    });
+ $(".date-picker-year").focus(function () {
+        $(".ui-datepicker-month").hide();
+    });
+    });
+    </script>
 
-    {% block head %}
-
-    {% endblock %}
  
   
 
@@ -54,15 +70,29 @@
                         <a href="#"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
 
-                    {% if home_or_userhomepage %}
+                    {% if company or home %}
                    
                     <li><a href="{% url 'home' %}"><i class="fa fa-puzzle-piece"></i>  View Posts</a></li>
+                    {% endif %}
+
+                    {% if home or userhomepage or company %}
+                   
                     <li><a href="{% url 'Vehicle_upload' %}"><i class="fa fa-id-badge"></i>  Upload</a></li>
                     
                     {% endif %}
-                    {% if company %}
+                    
+                    {% if home or company %}
 
-                    <li><a href="{% url 'bubble_chart' %}"><i class="fa fa-id-badge"></i>  Data VIsualization</a></li>
+                    
+                     <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Data Visualisation</a>
+                        <ul class="sub-menu children dropdown-menu">
+                           
+                            <li><i class="menu-icon fa fa-area-chart"></i><a href="{% url 'bubble_chart' %}">Age</a></li>
+                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="{% url 'bar_chart' %}">Gender</a></li>
+                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{% url 'line_chart' %}">Vehicles</a></li>
+                        </ul>
+                    </li>
                     
                     {% endif %}
                     {% if admin%}
@@ -87,16 +117,16 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                    {% if home_or_userhomepage or admin %}
+                    {% if home or userhomepage or admin or company %}
                     <div class="header-left">
                        <span><p style="color: black, font : helvetica ">Welcome {{user}} </p><span>
                        
                     </div>
-                    {% endif %}
+                   
                 </div>
 
                 <div class="col-sm-5">
-                {% if home_or_userhomepage or admin%}
+               
 
                     <div class="user-area dropdown float-right">
 
@@ -144,14 +174,15 @@
     <!-- Right Panel -->
    
    
-    <script src="{% static 'assets/js/vendor/jquery-2.1.4.min.js' %}"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+     <script src="{% static 'assets/js/plugins.js' %}"></script>
 <!-- <script src="{% static 'assets/js/main.js' %}"></script> -->
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-    <script src="{% static 'assets/js/plugins.js' %}"></script>
+   
   
     <script src="{% static 'assets/js/lib/chart-js/Chart.bundle.js' %}"></script>
     <script src="{% static 'assets/js/dashboard.js' %}"></script>
@@ -160,6 +191,8 @@
     <script src="{% static 'assets/js/lib/vector-map/jquery.vmap.min.js' %}"></script>
     <script src="{% static 'assets/js/lib/vector-map/jquery.vmap.sampledata.js' %}"></script>
     <script src="{% static 'assets/js/lib/vector-map/country/jquery.vmap.world.js' %}"></script>
+
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
      $('.bd-example-modal-lg').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
@@ -169,7 +202,7 @@
         })
         $(document).ready( function () {
     $('#myTable').DataTable();
-} );
+    } );
    </script>
     {% block script %}
     {% endblock %}

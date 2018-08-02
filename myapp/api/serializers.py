@@ -22,6 +22,6 @@ class VehiclesSerializer(serializers.HyperlinkedModelSerializer):
 class UserlikeSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Userlikes
-		fields = ('company_id','user_id','vehicle_id')
+		fields = ('company_id','liker_id','vehicle_id','month')
 			
 	

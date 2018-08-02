@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
+import datetime
 
 class Userprofile(models.Model):
 	# user = models.OneToOneField(User, on_delete=models.CASCADE ,null=True)
@@ -44,3 +45,4 @@ class Userlikes(models.Model):
 	company_id	= models.IntegerField(blank=True,null=True)
 	liker_id	= models.IntegerField(blank=True,null=True)
 	vehicle_id	= models.IntegerField(blank=True,null=True)
+	date 		= models.DateTimeField(auto_now_add=True, null=True)

@@ -23,7 +23,7 @@ from myapp.api import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'userprofile',views.UserProfileViewSet)
+router.register(r'userprofiles',views.UserProfileViewSet)
 router.register(r'vehicles', views.VehicleViewSet)
 router.register(r'userlike',views.UserlikeViewSet)
 
