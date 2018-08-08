@@ -35,6 +35,7 @@ class Vehicles(models.Model):
 	# user_id			= models.ForeignKey('Userprofile',on_delete=models.CASCADE, blank = True, null = True)
 	user_id			= models.IntegerField(blank = True, null = True)
 	like_count		= models.IntegerField(blank=True,null=True)
+	condition 		= models.CharField(blank=True,null=True,max_length=10)
 
 	def __str__(self):
     		return self.vehicle_type

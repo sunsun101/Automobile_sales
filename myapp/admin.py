@@ -9,7 +9,7 @@ class UserprofileModel(admin.ModelAdmin):
 		model = Userprofile
 
 class VehiclesModel(admin.ModelAdmin):
-	list_display = ["id","user_id","vehicle_type", "brand", "model_no" , "engine_power", "price","description","image","like_count"]
+	list_display = ["id","user_id","vehicle_type", "brand", "model_no" , "engine_power", "price","description","image","like_count","condition"]
 	search_fields = ["vehicle_type", "brand"]
 	class Meta:
 		model = Vehicles

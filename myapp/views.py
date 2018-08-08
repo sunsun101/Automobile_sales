@@ -12,6 +12,7 @@ from pprint import pprint
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from Automobile_sales import helpers
 from myapp import sendEmail
+from myapp import recommendation
 
 
 
@@ -536,7 +537,23 @@ def detailPage(request):
     vehicle_id  = request.GET.get('id', None)
     queryset = Vehicles.objects.filter(id = vehicle_id)
 
-    return render(request, 'Automobile_sales/detailPage.html', {'queryset':queryset,'individual_home':True})
+    recs_vehicle = [0] * 5
+    display_vehicle = [0] * 5
+
+    recs = recommendation.recommend(int(vehicle_id), 5)
+
+    for x in range(0,5):
+        id = recs[x][1]
+        recs_vehicle[x] = Vehicles.objects.filter(id = id)
+
+    x = 0
+    for obj in recs_vehicle:
+        display_vehicle[x] = obj[0]
+        x = x+1
+
+
+
+    return render(request, 'Automobile_sales/detailPage.html', {'queryset':queryset,'individual_home':True,'display_vehicle':display_vehicle})
     
 
 
