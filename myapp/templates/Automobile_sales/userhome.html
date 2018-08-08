@@ -3,6 +3,7 @@
 {% block head %}
   <link rel="stylesheet"  href="{% static 'css/automobile.css' %}">
 {% endblock %}
+
 {% block body %}
 
 <div class = "display">
@@ -18,12 +19,22 @@
                         <img src="{{obj.image.url}}">
 
                     </div>
-                    <div class="like">
-                        {% if obj.liker_id != null %}
-                        <img src="{%static 'images/likechange.jpg' %}" id="likeimage{{obj.id}}" onclick="likecounterDecrement({{obj.id}},'{% static 'images/like.png'%}')">
-                        {% else %}
-                        <img src="{%static 'images/like.png' %}" id="likeimage{{obj.id}}" onclick="likecounterIncrement({{obj.id}},'{% static 'images/likechange.jpg'%}')">
-                        {% endif %}
+                    <div class="row" style="padding-left : 20px">
+                        <div class="like">
+                            {% if obj.liker_id != null and obj.rating == 1 %}
+                            <img src="{%static 'images/likechange.jpg' %}" id="likeimage{{obj.id}}" onclick="likecounterDecrement({{obj.id}},'{% static 'images/like.png'%}')">
+                            {% else %}
+                            <img src="{%static 'images/like.png' %}" id="likeimage{{obj.id}}" onclick="likecounterIncrement({{obj.id}},'{% static 'images/likechange.jpg'%}')">
+                            {% endif %}
+                        </div>
+                        <div class="like">
+                            {% if obj.liker_id != null and obj.rating == -1 %}
+                            <img src="{%static 'images/dislike_change.jpg' %}" id="dislikeimage{{obj.id}}" onclick="dislikecounterDecrement({{obj.id}},'{% static 'images/dislike.png'%}')">
+                            {% else %}
+                            <img src="{%static 'images/dislike.png' %}" id="dislikeimage{{obj.id}}" onclick="dislikecounterIncrement({{obj.id}},'{% static 'images/dislike_change.jpg'%}')">
+                            {% endif %}
+                        </div>
+                        
                     </div>
                     
                     <table  class ="description">
@@ -69,6 +80,21 @@
           There are no records in the system
 {% endif %}
 </div>
+<div class="pagination">
+    <div class="section-inner clearfix">
+        <p>
+            {% if queryset.has_previous %}
+                <a href="?page={{ queryset.previous_page_number }}">&lt; Prev</a> |
+            {% endif %}
+
+            {% if queryset.has_next %}
+                <a href="?page={{ queryset.next_page_number }}">Next &gt;</a>
+            {% endif %}
+
+            <span>Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}</span>
+        </p>
+    </div>
+</div>
 
 
 
@@ -91,6 +117,8 @@
             success: function(result){
                 $("#likeimage"+i).attr('src',imagepath)
                 $("#likeimage"+i).attr('onclick',"likecounterDecrement("+i+",'/static/images/like.png')")
+                $("#dislikeimage"+i).attr('src','/static/images/dislike.png')
+                $("#dislikeimage"+i).attr('onclick',"dislikecounterIncrement("+i+",'/static/images/dislike_change.jpg')")
                 console.log(result.response);
                
         }});
@@ -113,6 +141,40 @@
                
         }});
     }
+    function dislikecounterIncrement(i, imagepath){
+
+       $.ajax({
+            url: '/dislikecounterIncrement/',
+            data: {
+            'id': i
+            },
+            dataType: 'json',
+            success: function(result){
+                $("#dislikeimage"+i).attr('src',imagepath)
+                $("#dislikeimage"+i).attr('onclick',"dislikecounterDecrement("+i+",'/static/images/dislike.png')")
+                $("#likeimage"+i).attr('src','/static/images/like.png')
+                $("#likeimage"+i).attr('onclick',"likecounterIncrement("+i+",'/static/images/likechange.jpg')")
+
+                console.log(result.response);
+               
+        }});
+    }
+    function dislikecounterDecrement(i, imagepath){
+
+       $.ajax({
+            url: '/dislikecounterDecrement/',
+            data: {
+            'id': i
+            },
+            dataType: 'json',
+            success: function(result){
+                $("#dislikeimage"+i).attr('src',imagepath)
+                $("#dislikeimage"+i).attr('onclick',"dislikecounterIncrement("+i+",'/static/images/dislike_change.jpg')")
+                console.log(result.response);
+               
+        }});
+    }
+
 
 </script>
 

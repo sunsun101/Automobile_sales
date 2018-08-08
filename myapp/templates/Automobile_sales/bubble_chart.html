@@ -20,26 +20,26 @@
       
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'Age Group');
-      data.addColumn('number', 'Month');
       data.addColumn('number', 'Like Rate');
-      data.addColumn('string', 'Age Group');
-       data.addColumn('number', 'Like count');
+      data.addColumn('string', 'Vehicle');
+      
 
       data.addRows([
         
+        {% for  obj in queryset %}
        
-        ['',      1 ,   50,      'Young',              1000],
-        ['', 1,    20,      'Middle Aged',        5000],
-        ['',    1,    30,      'Old Aged',         2000],
-          
+        ['{{obj.agegroup}}',{{obj.like_rate}},'{{obj.vehicle_name}}'],
+
+        {% endfor %}
+        
 
      
       ]);
 
       var options = {
-        title: 'Correlation between Age Group ' +
+        title: 'Correlation between Age Group, Vehicles ' +
                'and Like Rate',
-        hAxis: {title: 'Month'},
+        hAxis: {title: 'Age Group'},
         vAxis: {title: 'Like Rate (scale of 1-100%)'},
         bubble: {textStyle: {fontSize: 11}}
       };

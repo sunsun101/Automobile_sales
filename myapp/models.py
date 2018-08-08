@@ -46,3 +46,4 @@ class Userlikes(models.Model):
 	liker_id	= models.IntegerField(blank=True,null=True)
 	vehicle_id	= models.IntegerField(blank=True,null=True)
 	date 		= models.DateTimeField(auto_now_add=True, null=True)
+	rating		= models.IntegerField(blank=True,null=True)

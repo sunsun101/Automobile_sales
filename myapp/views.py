@@ -9,6 +9,8 @@ from django.http import JsonResponse
 from django.db.models import F
 import datetime
 from pprint import pprint
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from Automobile_sales import helpers
 
 
 
@@ -23,7 +25,17 @@ def home(request):
     userid   = instance.id
     queryset = Vehicles.objects.filter(user_id = userid)
 
-    return render(request,"Automobile_sales/home.html",{'queryset': queryset, 'home': True,'userid':userid})
+    userdetail = User.objects.filter(id = userid)
+    username   = userdetail[0].username
+
+    userdetail2 = Userprofile.objects.filter(user_name = username)
+    if userdetail2[0].Acc_type == 'C':
+
+        return render(request,"Automobile_sales/home.html",{'queryset': queryset, 'home': True,'userid':userid})
+    else:
+        return render(request,"Automobile_sales/home.html",{'queryset': queryset, 'individual_home': True,'userid':userid})
+
+
 
 
 def userhome(request):
@@ -32,6 +44,20 @@ def userhome(request):
     instance = request.user
     userid   = instance.id
     queryset = Vehicles.objects.raw('''SELECT * from myapp_vehicles LEFT JOIN myapp_userlikes on myapp_vehicles.id = myapp_userlikes.vehicle_id and myapp_userlikes.liker_id = %s ''', [userid])
+    paginator = Paginator(queryset,5)
+    paginator._count = len(list(queryset))
+    page = request.GET.get('page')
+
+    try:
+        # create Page object for the given page
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        # if page parameter in the query string is not available, return the first page
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # if the value of the page parameter exceeds num_pages then return the last page
+        queryset = paginator.page(paginator.num_pages)
+    
 
     return render(request,"Automobile_sales/userhome.html",{'queryset': queryset,'userhomepage': True,'userid':userid})
 
@@ -163,7 +189,19 @@ def create_account(request):
 def vehicle_upload(request):
     if not request.session.get('logged_in'):
         return HttpResponseRedirect('/')
-    return render(request,'Automobile_sales/Vehicle_upload.html', {})
+    instance = request.user
+    userid   = instance.id
+    
+    userdetail = User.objects.filter(id = userid)
+    username   = userdetail[0].username
+
+    userdetail2 = Userprofile.objects.filter(user_name = username)
+    if userdetail2[0].Acc_type == 'C':
+
+        return render(request,'Automobile_sales/Vehicle_upload.html', {'company':True})
+    else:
+        return render(request,'Automobile_sales/Vehicle_upload.html', {'company':False,'individual_home':True})
+
 
 
 def vehicle_store(request):
@@ -198,19 +236,28 @@ def likecounterIncrement(request):
     queryset    = Vehicles.objects.filter(id = vehicle_id)
     company_id  = queryset[0].user_id
 
-    userlike,created = Userlikes.objects.get_or_create(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id)
-    like_store = Vehicles.objects.filter(id = vehicle_id).update(like_count = F('like_count')+1)
-    if not created:
-        # the user already liked this picture before
-        data = {
-            'response':"data already exists"
-        }
-
+    check       = Userlikes.objects.filter(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id)
+    if check:
+        if check[0].rating == -1:
+            Userlikes.objects.filter(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id).update(rating = 1)
+            data = {
+                'response':"data updated"
+            }
     else:
-   
-        data = {
-            'response':"data stored"
-        }
+
+        userlike,created = Userlikes.objects.get_or_create(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id, rating = 1)
+        like_store = Vehicles.objects.filter(id = vehicle_id).update(like_count = F('like_count')+1)
+        if not created:
+                # the user already liked this picture before
+                data = {
+                    'response':"data already exists"
+                }
+
+        else:
+           
+                data = {
+                    'response':"data stored"
+                }
     return JsonResponse(data);
 
     # return render(request, 'registration/index.html', {})
@@ -235,6 +282,61 @@ def likecounterDecrement(request):
     
     return JsonResponse(data);
 
+def dislikecounterDecrement(request):
+
+    instance    = request.user
+    user_id     = instance.id
+
+    vehicle_id  = request.GET.get('id', None)
+    queryset    = Vehicles.objects.filter(id = vehicle_id)
+    company_id  = queryset[0].user_id
+    
+    
+    userquery = Userlikes.objects.filter(vehicle_id = vehicle_id, liker_id = user_id)
+    userquery.delete()
+    data = {
+            'response':'data deleted'
+       }
+
+    
+    
+
+    
+    return JsonResponse(data);
+
+def dislikecounterIncrement(request):
+
+    instance    = request.user
+    user_id     = instance.id
+
+    vehicle_id  = request.GET.get('id', None)
+    queryset    = Vehicles.objects.filter(id = vehicle_id)
+    company_id  = queryset[0].user_id
+
+    check       = Userlikes.objects.filter(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id)
+    if check:
+        if check[0].rating == 1:
+            Userlikes.objects.filter(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id).update(rating = -1)
+            data = {
+                'response':"data updated"
+            }
+    else:
+        userlike,created = Userlikes.objects.get_or_create(company_id = company_id, liker_id = user_id, vehicle_id = vehicle_id, rating = -1)
+        if not created:
+        # the user already disliked this picture before
+            data = {
+                'response':"data already exists"
+            }
+
+        else:
+   
+            data = {
+                'response':"data stored"
+            }
+        
+    
+    return JsonResponse(data);
+
 
 def validate_username(request):
     username = request.GET.get('username', None)
@@ -254,9 +356,59 @@ def validate_email(request):
 #     queryset = Vehicles.objects.raw('''SELECT * from myapp_vehicles LEFT JOIN myapp_userlikes on myapp_vehicles.id = myapp_userlikes.vehicle_id and myapp_userlikes.liker_id = 15''')
 
 def bubble_chart(request):
+    # if not request.session.get('logged_in'):
+    #     return HttpResponseRedirect('/')
+       
+    # instance    = request.user
+    # company_id     = instance.id
+    # queryset = Userlikes.objects.raw('''SELECT * from myapp_userlikes LEFT JOIN myapp_userprofile on myapp_userlikes.liker_id = myapp_userprofile.id and myapp_userlikes.company_id = %s''', [company_id])
+    
+    # age = [0]*4
+
+    # for obj in queryset:
+    #     if obj.birth_date:
+    #         calc_age = datetime.date.today()-obj.birth_date
+    #         if calc_age > 17 and calc_age < 31:
+    #         young = obj
+
+    #         elif calc_age>30 and calc_age<51:
+    #         middle = obj
+
+    #         elif calc_age>50 and calc_age<71:
+    #         old = obj
+
+    #         else:
+    #         veryold = obj
+
+    # x=0
+    # for y in young:
+    #     length = len(list(young))
+    #     yvehicleId = [0]*length
+    #     ylike_rate = [0]*length
+    #     ylike_count = [0]*length
+    #     if x == 0:
+    #         yvehicleId[x] = y.vehicle_id
+    #         ylike_count[x] = like_count[x]+1
+    #         x = x + 1
+
+
+    #     elif x != 0:
+    #         i = 0
+    #         for i in range(0,length):
+    #             if y.vehicle_id == yvehicleId[i]:
+    #                 ylike_count[i] = ylike_count[i] + 1
+
+    #         if i == 0:
+    #             yvehicleId[x] = y.vehicle_id
+    #             ylike_count[x] = ylike_count[x]+1
+    #             x = x + 1
+
+
     return render(request, 'Automobile_sales/bubble_chart.html', {'company':True})
 
 def bar_chart(request):
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
     instance    = request.user
     company_id     = instance.id
     if request.POST:
@@ -269,20 +421,21 @@ def bar_chart(request):
         male_percent = [0] * 13
         female_percent = [0] * 13
         for obj in queryset:
-            test = year
-            if obj.date.year == int(year):
-            
-                for x in range(1,12):
+            if obj.rating == 1:
+                test = year
+                if obj.date.year == int(year):
                 
+                    for x in range(1,12):
                     
-                    if obj.date.month == x:
-                        if obj.gender:
-                            if obj.gender == 'male':
-                                male_count[x] = male_count[x] + 1
-                            elif obj.gender == 'female':
-                                female_count[x] = female_count[x] + 1
-                            else:
-                                other_count[x] = other_count[x] + 1
+                        
+                        if obj.date.month == x:
+                            if obj.gender:
+                                if obj.gender == 'male':
+                                    male_count[x] = male_count[x] + 1
+                                elif obj.gender == 'female':
+                                    female_count[x] = female_count[x] + 1
+                                else:
+                                    other_count[x] = other_count[x] + 1
 
         for x in range(1,12):
             if (male_count[x] != 0 or female_count[x] != 0 or other_count[x] != 0):
@@ -299,18 +452,19 @@ def bar_chart(request):
         male_percent = [0] * 13
         female_percent = [0] * 13
         for obj in queryset:
-            if obj.date.year == datetime.datetime.now().year:
-                
-                for x in range(1,12):
-                
-                    if obj.date.month == x:
-                        if obj.gender:
-                            if obj.gender == 'male':
-                                male_count[x] = male_count[x] + 1
-                            elif obj.gender == 'female':
-                                female_count[x] = female_count[x] + 1
-                            else:
-                                other_count[x] = other_count[x] + 1
+            if obj.rating == 1:
+                if obj.date.year == datetime.datetime.now().year:
+                    
+                    for x in range(1,12):
+                    
+                        if obj.date.month == x:
+                            if obj.gender:
+                                if obj.gender == 'male':
+                                    male_count[x] = male_count[x] + 1
+                                elif obj.gender == 'female':
+                                    female_count[x] = female_count[x] + 1
+                                else:
+                                    other_count[x] = other_count[x] + 1
 
         for x in range(1,12):
             if (male_count[x] != 0 or female_count[x] != 0 or other_count[x] != 0):
@@ -321,11 +475,15 @@ def bar_chart(request):
         return render(request, 'Automobile_sales/bar_chart.html', {'company':True, 'male_percent':male_percent,'female_percent':female_percent})
 
 def line_chart(request):
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
     instance    = request.user
     company_id  = instance.id
    
     vehicle1_likes = [0] * 13
     vehicle2_likes = [0] * 13
+    vehicle1_rates = [0] * 13
+    vehicle2_rates = [0] * 13
     
     if request.POST:
         # values = [0]*2
@@ -333,11 +491,11 @@ def line_chart(request):
         value1 = int(values[0])
         value2 = int(values[1])
         
-        queryset = Userlikes.objects.raw('''SELECT * from myapp_userlikes where company_id = %s and vehicle_id in (%s,%s)''', [company_id,value1,value2])
+        queryset = Userlikes.objects.raw('''SELECT * from myapp_userlikes where company_id = %s and vehicle_id in (%s,%s) and rating = 1''', [company_id,value1,value2])
     else:
         value1 = 41
         value2 = 42
-        queryset = Userlikes.objects.raw('''SELECT * from myapp_userlikes where company_id = %s and vehicle_id in (%s,%s)''', [company_id,value1,value2])
+        queryset = Userlikes.objects.raw('''SELECT * from myapp_userlikes where company_id = %s and vehicle_id in (%s,%s) and rating = 1''', [company_id,value1,value2])
     
     vehicle_list = Vehicles.objects.filter(user_id = company_id)
 
@@ -352,10 +510,23 @@ def line_chart(request):
                         vehicle1_likes[x] = vehicle1_likes[x] + 1
                     else:
                         vehicle2_likes[x] = vehicle2_likes[x] + 1
-                    
+    
+    for x in range(1,12):
+            if (vehicle1_likes[x] != 0 or vehicle2_likes[x] != 0):
+                vehicle1_rates[x] = round((float(vehicle1_likes[x])/(vehicle1_likes[x]+vehicle2_likes[x]))*100,2)
+                vehicle2_rates[x] = round((float(vehicle2_likes[x])/(vehicle1_likes[x]+vehicle2_likes[x]))*100,2)  
+            elif(vehicle1_likes[x] == 0 and vehicle2_likes[x] == 0 ):
+                vehicle1_rates[x] = 0
+                vehicle2_rates[x] = 0
+            elif(vehicle1_likes[x] == 0 and vehicle2_likes[x] != 0):
+                vehicle1_rates[x] = 0
+                vehicle2_rates[x] = 100
+            else:
+                vehicle1_rates[x] = 100
+                vehicle2_rates[x] = 0           
 
 
-    return render(request, 'Automobile_sales/line_chart.html', {'value1':value1,'value2':value2,'company':True,'vehicle_list':vehicle_list,'vehicle1_likes':vehicle1_likes,'vehicle2_likes':vehicle2_likes})
+    return render(request, 'Automobile_sales/line_chart.html', {'value1':value1,'value2':value2,'company':True,'vehicle_list':vehicle_list,'vehicle1_rates':vehicle1_rates,'vehicle2_rates':vehicle2_rates})
 
 def userprofile(request):
     return render(request, 'Automobile_sales/userprofile.html', {})

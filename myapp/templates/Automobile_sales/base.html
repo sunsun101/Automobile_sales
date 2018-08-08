@@ -69,8 +69,13 @@
                     <li class="active">
                         <a href="#"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
+                  
+                    {% if individual_home %}
+                    <li><a href="{% url 'userhome' %}"><i class="fa fa-puzzle-piece"></i>  Home </a></li>
+                    {% endif %}
 
-                    {% if company or home %}
+
+                    {% if company or userhomepage %}
                    
                     <li><a href="{% url 'home' %}"><i class="fa fa-puzzle-piece"></i>  View Posts</a></li>
                     {% endif %}
@@ -117,7 +122,7 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                    {% if home or userhomepage or admin or company %}
+                    {% if home or userhomepage or admin or company or individual_home %}
                     <div class="header-left">
                        <span><p style="color: black, font : helvetica ">Welcome {{user}} </p><span>
                        
