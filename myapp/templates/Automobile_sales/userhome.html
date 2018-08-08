@@ -67,6 +67,11 @@
                             <td>Description</td>
                             <td>{{obj.description}}</td>
                         </tr>
+                        <tr>
+
+                            <td><button id = "viewDetaile{{obj.id}}"type = "submit" class="btn btn-primary btn-sm" onclick=""><a href='http://127.0.0.1:8000/detailPage?id={{obj.id}}' style = "color:white">View Details</a></button></td>
+                            
+                        </tr>
                       
                     </tbody>
                 </table>
@@ -174,6 +179,21 @@
                
         }});
     }
+    // function detailPage(i){
+    //     $.ajax({
+    //         url:'/detailPage/',
+    //         data:{
+    //             'id':i
+    //         },
+    //         dataType: 'json',
+    //         success: function(result){
+
+    //             console.log(result.response);
+    //             location.href = "{% url 'detailPage' %}"
+
+    //         }});
+        
+    // }
 
 
 </script>

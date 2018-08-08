@@ -28,6 +28,9 @@ urlpatterns = [
 	url(r'^bubble_chart/$',views.bubble_chart, name='bubble_chart'),
 	url(r'^bar_chart/$',views.bar_chart, name='bar_chart'),
 	url(r'^line_chart/$',views.line_chart, name='line_chart'),
+	url(r'^detailPage/$',views.detailPage, name='detailPage'),
+	url(r'^email/$',views.email, name='email'),
+	url(r'^transferEmail/$',views.transferEmail, name='transferEmail'),
 
 	
 

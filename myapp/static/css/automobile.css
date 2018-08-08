@@ -27,13 +27,13 @@ blockquote {
 }
 
 
-input[type=text]{
+/*input[type=text]{
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
-}
+}*/
 .register{
   margin-top: 100px;
   margin-left:300px;
@@ -84,6 +84,11 @@ input[type=text]{
    margin: -100px 0 0 0;
 
 
+
+}
+.detailContainer{
+  width: inherit;
+  height: 500px; 
 }
 .like img{
 
@@ -101,4 +106,39 @@ input[type=text]{
 }
 .ui-datepicker-next,.ui-datepicker-prev {
   display:none;
+}
+
+/*.sidebarBox {
+  width: 350px; 
+  height:1200px;
+  position: static;
+  overflow: auto; 
+  margin-left: -1100px;
+ 
+}
+.sidebarBox h3{
+margin-left: 40px;
+}
+.sidebarBox p{
+  margin-left: 30px;
+}
+.sidebarBox h4{
+  margin-left:50px;
+  font-size:15px;
+}
+.sidebarBox img{
+  margin-left: 20px;
+}
+.sidehead{
+ 
+
+}*/
+.heading{
+  font-family:inherit;
+  color: gray;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 10px;
+  
+
 }

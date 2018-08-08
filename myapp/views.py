@@ -11,6 +11,7 @@ import datetime
 from pprint import pprint
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from Automobile_sales import helpers
+from myapp import sendEmail
 
 
 
@@ -530,3 +531,29 @@ def line_chart(request):
 
 def userprofile(request):
     return render(request, 'Automobile_sales/userprofile.html', {})
+
+def detailPage(request):
+    vehicle_id  = request.GET.get('id', None)
+    queryset = Vehicles.objects.filter(id = vehicle_id)
+
+    return render(request, 'Automobile_sales/detailPage.html', {'queryset':queryset,'individual_home':True})
+    
+
+
+def email(request):
+    return render(request, 'Automobile_sales/email.html', {'individual_home':True})
+
+def transferEmail(request):
+    if request.POST:
+        email    = request.POST.get('email')
+        pwd      = request.POST.get('password')
+        subject  = request.POST.get('subject')
+        message  = request.POST.get('message')
+
+        value = sendEmail.send(email,pwd,subject,message)
+        if value == 'success':
+            alert = True
+       
+
+    return render(request, 'Automobile_sales/email.html', {'individual_home':True,'alert':alert})
+

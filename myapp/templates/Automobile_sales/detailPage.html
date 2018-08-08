@@ -1,0 +1,92 @@
+{% extends 'Automobile_sales/base.html' %}
+{% load staticfiles %}
+{% block head %}
+  <link rel="stylesheet"  href="{% static 'css/automobile.css' %}">
+{% endblock %}
+{% block detail %}
+  <div class="card">
+    {% for obj in queryset %}
+      <div class="loop">
+                    <div class = "detailContainer">
+
+                        <img src="{{obj.image.url}}">
+
+                    </div>
+                  
+                    
+                    <table  class ="description">
+                      
+                        
+                     <tbody>
+                        <tr>
+                            <td style="font-weight: bold;">Description</td>
+                        </tr>
+                      
+                        <tr>
+                            <td>Brand:</td>
+                            <td>{{obj.brand}}</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Model No:</td>
+                            <td>{{obj.model_no}}</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Engine Power:</td>
+                            <td>{{obj.engine_power}}</td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td>{{obj.price}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>{{obj.description}}</td>
+                        </tr>
+                        <tr>
+                            <td><button id = "sendEmail{{obj.id}}"type = "submit" class="btn btn-primary btn-sm" onclick="location.href = '{% url 'email' %}';">Send Email</button></td>
+                            
+                        </tr>
+                      
+                    </tbody>
+                </table>
+                 <hr>  
+             </div>
+             
+    {% endfor %}
+
+    
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+
+<div class="card">
+<p class="heading">You may also like</p>
+
+     <div class="sidebarBox">
+          
+          <a href=""><img id="images" src="{% static "images/suzuki-new-alto-800.jpg" %}"/></a>
+          <br> </br>
+              <a href=""> <img id="images" src="{% static "images/honda-jazz.jpg" %}"/>
+          <br /><br />
+            <a href=""> <img id="images" src="{% static "images/honda-mobilio.jpg" %}"/>
+          <br /><br /> 
+           <a href=""> <img id="images" src="{% static "images/honda.jpeg" %}"/>
+          <br /><br />
+
+      </div>
+  
+</div>
+
+  
+
+
+  {% endblock %}
+  
+  {% block script %}
+
+   
+    
+  {% endblock %}    
