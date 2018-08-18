@@ -19,6 +19,7 @@ class Userprofile(models.Model):
 	user_name   = models.CharField(max_length=30,blank=True,unique=True)
 	password 	= models.CharField(max_length=16,blank=True)
 	Acc_type	= models.CharField(max_length= 10,default = "I") 
+	user_image  = models.ImageField(upload_to ="user_image",null=True)
 
 	
 	def __str__(self):

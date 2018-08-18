@@ -3,7 +3,7 @@ from .models import Userprofile,Vehicles,Userlikes
 from django.contrib.auth.models import User
 
 class UserprofileModel(admin.ModelAdmin):
-	list_display = ["id","first_name", "middle_name", "last_name" ,"company_name", "gender", "email","Acc_type","birth_date"]
+	list_display = ["id","first_name", "middle_name", "last_name" ,"company_name", "gender", "email","Acc_type","birth_date","user_image"]
 	search_fields = ["first_name", "last_name"]
 	class Meta:
 		model = Userprofile

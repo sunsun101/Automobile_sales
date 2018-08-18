@@ -4,9 +4,136 @@
   <link rel="stylesheet"  href="{% static 'css/automobile.css' %}">
 {% endblock %}
 {% block body %}
+<div class="profile">
+{% for obj in userdetail%}
+<div class="row">
+	<div class="col-md-4">
+		
+	</div>
+	<div class="col-md-3 ">
+	   <div class="profile-userpic">
+	      {% if obj.user_image != empty %}
+	      <img src="{{obj.user_image.url}}" alt="{% static 'images/user.jpg' %}" class="img-responsive" name = "picture" id = "imagefield">   
+	      {% endif %}
+	      {% if obj.user_image == empty %}
+	      <img src="{% static 'images/user.jpg' %}" alt="{% static 'images/user.jpg' %}" class="img-responsive" name = "picture" id = "imagefield"> 
+	      {% endif %}     
+	      <div class="form-group">
+	         <div class="text-center">
+	            <label for="Upload_Picture" class=" form-control-label text-justify" >* Upload Picture</label>      
+	         </div>
+	         <input type="file" name="imagefile" onchange="showImage.call(this)" accept="image/gif, image/jpeg, image/png" class="form-control" style="border: none;" required >
+	      </div>
+	   </div>
+	</div>
+	<div class = "col-md-5">
+	</div>
+	
+</div>
+<p>{{value}}</p>
+
+	
+<div id="sec_box" style="height: 1500px;">
+   <div class="profile-content">
+      <div class="col-md-9">
+         <div class="card1" syle="border: none">
+            <div class="card-body1">
+              
+               <div class="row">
+                  <div class="col-md-12">
+
+                     <form method="POST" action="/userprofile/">
+                      {% csrf_token %}
+                        <div class="form-group row" style="">
+
+                           <label for="username" class="col-4 col-form-label">First Name*</label>
+                           <div class="col-8">
+
+                              <input id="firstname" name="first-name"  class="form-control here" required="required" type="text" value="{{obj.first_name}}">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="name" class="col-4 col-form-label">Middle Name</label>
+                           <div class="col-8">
+                              <input id="middlename" name="middle-name"  class="form-control here" type="text" value="{{obj.middle_name}}">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="lastname" class="col-4 col-form-label">Last Name*</label>
+                           <div class="col-8">
+                              <input id="lastname" name="last-name"  class="form-control here" type="text" required="required" value="{{obj.last_name}}">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="text" class="col-4 col-form-label">User Name*</label>
+                           <div class="col-8">
+                              <input id="username" name="user-name"  class="form-control here" required="required" type="text" onblur="checkUserName()" value="{{obj.user_name}}">
+                              <span id="message1"></span>
+                              <span style="color: red"></span>
+                           </div>
+                        </div>
+                        {% if company_acc %}
+                        <div class="form-group row">
+                           <label for="email" class="col-4 col-form-label">Company Name*</label>
+                           <div class="col-8">
+                              <input id="email" name="comapny-name"  class="form-control here" required="required" type="text" value="{{obj.company_name}}">
+                           </div>
+                        </div>
+                        {% endif %}
+                        <div class="form-group row">
+                           <label for="email" class="col-4 col-form-label">Password*</label>
+                           <div class="col-8">
+                              <input id="email" name="password"  class="form-control here" required="required" type="text" value="{{obj.Password}}">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="email" class="col-4 col-form-label">Email*</label>
+                           <div class="col-8">
+                              <input id="email" name="email" class="form-control here" required="required" type="text" value="{{obj.email}}">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="dob" class="col-4 col-form-label">Date of Birth</label>
+                           <div class="col-8">
+                              <input id="dob" name="dob" class="form-control here" type="Date" value="{{obj.birth_date}}">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <div class="offset-4 col-8">
+                              <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+
+	
+</div>
+
 
   {% endblock %}
   
   {% block script %}
+  <script>
+  function showImage()
+  {
+    if(this.files && this.files[0])
+    {
+      var obj = new FileReader();
+      obj.onload = function(data){
+        var image = document.getElementById("imagefield");
+        image.src = data.target.result;
+        image.style.display = "block";
+      }
+      obj.readAsDataURL(this.files[0]);
+    }
+  }
+</script> 
     
   {% endblock %}

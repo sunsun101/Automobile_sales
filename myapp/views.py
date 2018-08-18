@@ -43,6 +43,7 @@ def home(request):
 def userhome(request):
     if not request.session.get('logged_in'):
         return HttpResponseRedirect('/')
+    link = request.build_absolute_uri('/')
     instance = request.user
     userid   = instance.id
     queryset = Vehicles.objects.raw('''SELECT * from myapp_vehicles LEFT JOIN myapp_userlikes on myapp_vehicles.id = myapp_userlikes.vehicle_id and myapp_userlikes.liker_id = %s ''', [userid])
@@ -61,7 +62,7 @@ def userhome(request):
         queryset = paginator.page(paginator.num_pages)
     
 
-    return render(request,"Automobile_sales/userhome.html",{'queryset': queryset,'userhomepage': True,'userid':userid})
+    return render(request,"Automobile_sales/userhome.html",{'queryset': queryset,'userhomepage': True,'userid':userid,'link':link})
 
 def adminpage(request):
     if not request.session.get('logged_in'):
@@ -220,11 +221,22 @@ def vehicle_store(request):
     instance = request.user
     userid   = instance.id
 
+    userdetail = User.objects.filter(id = userid)
+    username   = userdetail[0].username
+
+    userdetail2 = Userprofile.objects.filter(user_name = username)
+    if userdetail2[0].Acc_type == 'C':
+
    
-    vehicle = Vehicles(vehicle_type = Vehicle_type, brand = Brand, model_no = Model_no, price = Price, description = Description, image = Image, user_id = userid )
-    vehicle.save()
-    
-    queryset = Vehicles.objects.filter(user_id = userid)
+        vehicle = Vehicles(vehicle_type = Vehicle_type, brand = Brand, model_no = Model_no, price = Price, description = Description, image = Image, user_id = userid,condition = 'New' )
+        vehicle.save()
+        
+        queryset = Vehicles.objects.filter(user_id = userid)
+    else:
+        vehicle = Vehicles(vehicle_type = Vehicle_type, brand = Brand, model_no = Model_no, price = Price, description = Description, image = Image, user_id = userid,condition = 'Used' )
+        vehicle.save()
+        
+
     return HttpResponseRedirect('/home/')
 
 
@@ -531,9 +543,47 @@ def line_chart(request):
     return render(request, 'Automobile_sales/line_chart.html', {'value1':value1,'value2':value2,'company':True,'vehicle_list':vehicle_list,'vehicle1_rates':vehicle1_rates,'vehicle2_rates':vehicle2_rates})
 
 def userprofile(request):
-    return render(request, 'Automobile_sales/userprofile.html', {})
+    if not request.session.get('logged_in'):
+        return HttpResponseRedirect('/')
+    instance = request.user
+    userid   = instance.id
+
+    userdetail = User.objects.filter(id = userid)
+    username   = userdetail[0].username
+    value = 'tomato'
+
+    if request.POST:
+        first_name  = request.POST.get('first-name')
+        middle_name = request.POST.get('middle-name')
+        last_name   = request.POST.get('last-name')
+        name        = request.POST.get('user-name')
+        company_name = request.POST.get('company-name')
+        email  = request.POST.get('email')
+        psw         = request.POST.get('password')
+        bday        = request.POST.get('bday')
+        Image  = request.FILES.get('imagefile')
+
+        value = 'potato'
+
+        Userprofile.objects.filter(user_name = username).update(first_name = first_name , middle_name = middle_name,last_name = last_name,user_name = name,email = email , password = psw, birth_date = bday,user_image = Image)
+       
+
+
+    # instance = request.user
+    # userid   = instance.id
+
+    # userdetail = User.objects.filter(id = userid)
+    # username   = userdetail[0].username
+
+    userdetail2 = Userprofile.objects.filter(user_name = username)
+    if userdetail2[0].Acc_type == 'C':
+        company_acc = True
+    else:
+        company_acc = False
+    return render(request, 'Automobile_sales/userprofile.html', {'individual_home':True,'userdetail':userdetail2,'company_acc':company_acc,'value':value})
 
 def detailPage(request):
+ 
     vehicle_id  = request.GET.get('id', None)
     queryset = Vehicles.objects.filter(id = vehicle_id)
 

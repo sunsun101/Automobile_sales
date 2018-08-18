@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-ds = pd.read_csv("myapp/finalDataset.csv")#you can plug in your own list of products or movies or books here as csv file
+ds = pd.read_csv("myapp/finalDataset.csv")
 
 tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0, stop_words='english')
 ######ngram (1,3) can be explained as follows#####
@@ -14,7 +14,7 @@ tfidf_matrix = tf.fit_transform(ds['description'])
 
 cosine_similarities = linear_kernel(tfidf_matrix, tfidf_matrix)
 
-results = {}# dictionary created to store the result in a dictionary format (ID : (Score,item_id))
+results = {}
 
 for idx, row in ds.iterrows():
     # the below code 'similar_indice' stores similar ids based on cosine similarity. sorts them in ascending order. [:-5:-1] is then used so that the indices with most similarity are got. 0 means no similarity and 1 means perfect similarity
